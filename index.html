@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Героїчне протистояння</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon-192x192.png">
+    <meta name="theme-color" content="#4a90e2">
+</head>
+<body>
+    <div class="container">
+        <h1 id="message"></h1>
+    </div>
+    <script>
+    function updateDays() {
+        const startDate = new Date('2022-02-24');
+        const today = new Date();
+        const diffTime = Math.abs(today - startDate);
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        
+        const message = `Сьогодні <span class="days">${diffDays}</span> доба героїчного протистояння`;
+        document.getElementById('message').innerHTML = message;
+    }
+
+    updateDays();
+    setInterval(updateDays, 60000); // Обновлять каждую минуту
+    </script>
+</body>
+</html>
