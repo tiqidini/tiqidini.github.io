@@ -8,6 +8,47 @@
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="icon-192x192.png">
     <meta name="theme-color" content="#4a90e2">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .container {
+            text-align: center;
+            max-width: 90%;
+        }
+        #message {
+            font-size: 6vw;
+            line-height: 1.5;
+        }
+        .days {
+            font-size: 20vw;
+            font-weight: bold;
+            display: block;
+            margin: 20px 0;
+            background: linear-gradient(45deg, #ff00ff, #00ffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: colorChange 5s infinite alternate;
+        }
+        @keyframes colorChange {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
+        }
+        @media (min-width: 428px) {
+            #message {
+                font-size: 24px;
+            }
+            .days {
+                font-size: 80px;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -20,7 +61,7 @@
         const diffTime = Math.abs(today - startDate);
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
         
-        const message = `Сьогодні <span class="days">${diffDays}</span> доба героїчного протистояння`;
+        const message = `Сьогодні<br><span class="days">${diffDays}</span><br>доба<br>героїчного<br>протистояння`;
         document.getElementById('message').innerHTML = message;
     }
 
