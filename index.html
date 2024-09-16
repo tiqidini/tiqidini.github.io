@@ -55,15 +55,8 @@
             font-weight: bold;
             display: block;
             margin: 10px 0;
-            background: linear-gradient(45deg, #ff00ff, #00ffff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: colorChange 5s infinite alternate;
-            text-shadow: 
-                -1px -1px 0 rgba(255,255,255,0.5),  
-                1px -1px 0 rgba(255,255,255,0.5),
-                -1px 1px 0 rgba(255,255,255,0.5),
-                1px 1px 0 rgba(255,255,255,0.5);
+            color: white; /* Изменено на белый цвет */
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5); /* Добавлено теневое оформление */
         }
         @keyframes colorChange {
             0% { filter: hue-rotate(0deg); }
