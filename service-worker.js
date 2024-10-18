@@ -52,3 +52,17 @@ self.addEventListener('activate', function(event) {
         })
     );
 });
+
+self.addEventListener('message', (event) => {
+    if (event.data && event.data.type === 'UPDATE_ICON') {
+        // Обновляем иконку в манифесте
+        self.registration.getManifest().then(manifest => {
+            manifest.icons = [{
+                src: event.data.iconUrl,
+                sizes: '192x192 512x512',
+                type: 'image/png'
+            }];
+            self.registration.updateManifest(manifest);
+        });
+    }
+});

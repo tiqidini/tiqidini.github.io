@@ -153,6 +153,62 @@
             registration.update();
         });
     }
+
+    // Добавляем новый скрипт для создания иконки
+    function createIcon() {
+        const canvas = document.createElement('canvas');
+        canvas.width = 192;
+        canvas.height = 192;
+        const ctx = canvas.getContext('2d');
+
+        // Рисуем белый фон
+        ctx.fillStyle = 'white';
+        ctx.fillRect(0, 0, 192, 192);
+
+        // Загружаем оригинальный логотип
+        const img = new Image();
+        img.onload = function() {
+            // Вычисляем размер и позицию для логотипа (60% от размера канваса)
+            const size = 192 * 0.6;
+            const position = (192 - size) / 2;
+
+            // Рисуем логотип в центре
+            ctx.drawImage(img, position, position, size, size);
+
+            // Создаем новую иконку и обновляем ссылки на неё
+            const newIconUrl = canvas.toDataURL('image/png');
+            updateIconLinks(newIconUrl);
+        };
+        img.src = '1.png'; // Путь к оригинальному логотипу
+    }
+
+    function updateIconLinks(newIconUrl) {
+        // Обновляем иконку для браузера
+        const link = document.querySelector("link[rel*='icon']") || document.createElement('link');
+        link.type = 'image/x-icon';
+        link.rel = 'shortcut icon';
+        link.href = newIconUrl;
+        document.getElementsByTagName('head')[0].appendChild(link);
+
+        // Обновляем apple-touch-icon
+        const appleLink = document.querySelector("link[rel='apple-touch-icon']") || document.createElement('link');
+        appleLink.rel = 'apple-touch-icon';
+        appleLink.href = newIconUrl;
+        document.getElementsByTagName('head')[0].appendChild(appleLink);
+
+        // Обновляем иконку в манифесте
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.ready.then(registration => {
+                registration.active.postMessage({
+                    type: 'UPDATE_ICON',
+                    iconUrl: newIconUrl
+                });
+            });
+        }
+    }
+
+    // Вызываем функцию создания иконки при загрузке страницы
+    window.addEventListener('load', createIcon);
     </script>
 </body>
 </html>
