@@ -170,10 +170,11 @@
         img.onload = function() {
             // Вычисляем размер и позицию для логотипа (90% от размера канваса)
             const size = 192 * 0.9;
-            const position = (192 - size) / 2;
+            const horizontalPosition = (192 - size) / 2;
+            const verticalPosition = (192 - size) / 2 + 10; // Смещаем на 10 пикселей вниз
 
-            // Рисуем логотип в центре
-            ctx.drawImage(img, position, position, size, size);
+            // Рисуем логотип немного ниже центра
+            ctx.drawImage(img, horizontalPosition, verticalPosition, size, size);
 
             // Создаем новую иконку и обновляем ссылки на неё
             const newIconUrl = canvas.toDataURL('image/png');
