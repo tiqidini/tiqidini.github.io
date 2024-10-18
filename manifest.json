@@ -1,16 +1,17 @@
 {
-    "name": "Героїчне протистояння",
-    "short_name": "Протистояння",
-    "start_url": "index.html",
+    "name": "Конвертер мощности",
+    "short_name": "Конвертер",
+    "start_url": "/converter/index.html",
+    "id": "/converter/",
+    "scope": "/converter/",
     "display": "standalone",
-    "background_color": "#f0f0f0",
-    "theme_color": "#4a90e2",
+    "background_color": "#ffffff",
+    "theme_color": "#4CAF50",
     "icons": [
         {
-            "src": "icon-192x192.png",
+            "src": "/converter/icon.png",
             "sizes": "192x192",
             "type": "image/png"
         }
-    ],
-    "version": "1.0.4"
+    ]
 }

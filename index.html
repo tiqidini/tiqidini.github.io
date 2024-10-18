@@ -1,141 +1,34 @@
 <!DOCTYPE html>
-<html lang="uk">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
-    <title>Героїчне протистояння</title>
+    <title>Конвертер мощности</title>
+    <link rel="stylesheet" href="styles.css">
     <link rel="manifest" href="manifest.json">
-    <link rel="apple-touch-icon" href="1.png">
-    <link rel="icon" type="image/png" href="1.png">
-    <meta name="theme-color" content="#4a90e2">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Героїчне протистояння">
-    <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            font-family: Arial, sans-serif;
-            overflow: hidden;
-        }
-        .flag-background {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #0057b7; /* Синий фон на всю высоту */
-        }
-        .yellow-background {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 50%;
-            background: #ffd700;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-        }
-        .container {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 50%;
-            text-align: center;
-            z-index: 1;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-        #message {
-            font-size: 7vw;
-            line-height: 1.2;
-            margin: 0;
-            color: white;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-        }
-        .days {
-            font-size: 20vw;
-            font-weight: bold;
-            display: block;
-            margin: 5px 0;
-            color: white;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-        }
-        .image-container {
-            position: relative;
-            width: 80%;
-            max-width: 400px;
-            height: 90%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        #pulsating-image {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-            animation: pulse 2s ease-in-out infinite;
-        }
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-        @media (min-width: 428px) {
-            #message {
-                font-size: 28px;
-            }
-            .days {
-                font-size: 84px;
-            }
-        }
-        @media (max-width: 428px) {
-            .container {
-                height: 48%; /* Уменьшаем высоту контейнера на мобильных устройствах */
-            }
-            .yellow-background {
-                height: 52%; /* Увеличиваем высоту желтого фона на мобильных устройствах */
-            }
-        }
-    </style>
+    <meta name="apple-mobile-web-app-title" content="Конвертер мощности">
+    <link rel="apple-touch-icon" href="/converter/icon.png">
 </head>
 <body>
-    <div class="flag-background"></div>
-    <div class="yellow-background">
-        <div class="image-container">
-            <img id="pulsating-image" src="1.png" alt="Пульсирующее изображение">
-        </div>
-    </div>
     <div class="container">
-        <h1 id="message"></h1>
+        <h1>Конвертер мощности</h1>
+        <div class="converter">
+            <input type="number" id="input-value" placeholder="Введите значение">
+            <select id="input-unit">
+                <option value="dbm">dBm</option>
+                <option value="w">Вт</option>
+                <option value="mw">мВт</option>
+                <option value="uw">мкВт</option>
+                <option value="nw">нВт</option>
+                <option value="kw">кВт</option>
+            </select>
+            <button id="convert-btn">Конвертировать</button>
+        </div>
+        <div id="results" class="results"></div>
     </div>
-    <script>
-    function updateDays() {
-        const startDate = new Date('2022-02-24');
-        const today = new Date();
-        const diffTime = Math.abs(today - startDate);
-        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-        
-        const message = `Сьогодні<br><span class="days">${diffDays}</span><br>доба<br>героїчного<br>протистояння`;
-        document.getElementById('message').innerHTML = message;
-    }
-
-    updateDays();
-    setInterval(updateDays, 60000); // Обновлять каждую минуту
-
-    // Добавим код для обновления приложения
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.ready.then(registration => {
-            registration.update();
-        });
-    }
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/9.4.4/math.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
