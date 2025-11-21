@@ -1,215 +1,51 @@
 <!DOCTYPE html>
 <html lang="uk">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
+
     <title>Героїчне протистояння</title>
+    <meta name="description" content="Лічильник днів героїчного протистояння українського народу.">
+
+    <!-- PWA -->
     <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/png" href="1.png">
     <link rel="apple-touch-icon" href="1.png">
     <meta name="theme-color" content="#0057b7">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            font-family: 'Montserrat', sans-serif;
-            overflow: hidden;
-        }
-        .background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, #0057b7, #0057b7 49%, #ffd700 51%, #ffd700);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
-            z-index: -1;
-        }
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        .container {
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-            z-index: 1;
-        }
-        .card {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            padding: 40px;
-            max-width: 80%;
-            width: 400px;
-            text-align: center;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeIn 1s ease-out forwards;
-        }
-        @keyframes fadeIn {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        .logo-container {
-            width: 150px;
-            height: 150px;
-            margin: 0 auto 20px;
-            position: relative;
-        }
-        .logo {
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
-            animation: pulse 2s infinite;
-        }
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-        #message {
-            font-size: 24px;
-            line-height: 1.3;
-            margin: 0;
-            color: #333;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-        }
-        .days {
-            font-size: 84px;
-            font-weight: 700;
-            display: block;
-            margin: 20px 0;
-            color: #0057b7;
-            text-shadow: 
-                3px 3px 0 #ffd700,
-                -1px -1px 0 #ffd700,  
-                1px -1px 0 #ffd700,
-                -1px 1px 0 #ffd700,
-                1px 1px 0 #ffd700;
-        }
-        @media (max-width: 428px) {
-            .card { padding: 30px; }
-            #message { font-size: 20px; }
-            .days { font-size: 64px; }
-            .logo-container {
-                width: 120px;
-                height: 120px;
-            }
-        }
-        @media (min-width: 1200px) {
-            .card { 
-                max-width: 600px;
-                padding: 60px;
-            }
-            #message { font-size: 30px; }
-            .days { font-size: 100px; }
-            .logo-container {
-                width: 200px;
-                height: 200px;
-            }
-        }
-    </style>
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Героїчне протистояння">
+    <meta property="og:description" content="Скільки днів триває героїчне протистояння.">
+    <meta property="og:image" content="1.png">
+    <meta property="og:type" content="website">
+
+    <!-- Fonts & Styles -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Unbounded:wght@400;600;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
     <div class="background" aria-hidden="true"></div>
+    <canvas id="particles" aria-hidden="true"></canvas>
+
     <div class="container">
-        <div class="card" role="main">
+        <main class="card">
             <div class="logo-container">
                 <img src="1.png" alt="Логотип" class="logo">
             </div>
-            <h1 id="message" aria-live="polite"></h1>
-        </div>
+            <h1 id="message" aria-live="polite">Завантаження...</h1>
+        </main>
     </div>
-    <script>
-    function updateDays() {
-        const startDate = new Date('2022-02-24');
-        const today = new Date();
-        const diffTime = Math.abs(today - startDate);
-        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-        
-        const message = `Сьогодні<br><span class="days">${diffDays}</span><br>доба<br>героїчного<br>протистояння`;
-        document.getElementById('message').innerHTML = message;
-    }
 
-    updateDays();
-    setInterval(updateDays, 60000);
-
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.ready.then(registration => {
-            registration.update();
-        });
-    }
-
-    // Добавляем новый скрипт для создания иконки
-    function createIcon() {
-        const canvas = document.createElement('canvas');
-        canvas.width = 192;
-        canvas.height = 192;
-        const ctx = canvas.getContext('2d');
-
-        // Рисуем белый фон
-        ctx.fillStyle = 'white';
-        ctx.fillRect(0, 0, 192, 192);
-
-        // Загружаем оригинальный логотип
-        const img = new Image();
-        img.onload = function() {
-            // Вычисляем размер и позицию для логотипа (90% от размера канваса)
-            const size = 192 * 0.9;
-            const horizontalPosition = (192 - size) / 2;
-            const verticalPosition = (192 - size) / 2 + 10; // Смещаем на 10 пикселей вниз
-
-            // Рисуем логотип немного ниже центра
-            ctx.drawImage(img, horizontalPosition, verticalPosition, size, size);
-
-            // Создаем новую иконку и обновляем ссылки на неё
-            const newIconUrl = canvas.toDataURL('image/png');
-            updateIconLinks(newIconUrl);
-        };
-        img.src = '1.png'; // Путь к оригинальному логотипу
-    }
-
-    function updateIconLinks(newIconUrl) {
-        // Обновляем иконку для браузера
-        const link = document.querySelector("link[rel*='icon']") || document.createElement('link');
-        link.type = 'image/x-icon';
-        link.rel = 'shortcut icon';
-        link.href = newIconUrl;
-        document.getElementsByTagName('head')[0].appendChild(link);
-
-        // Обновляем apple-touch-icon
-        const appleLink = document.querySelector("link[rel='apple-touch-icon']") || document.createElement('link');
-        appleLink.rel = 'apple-touch-icon';
-        appleLink.href = newIconUrl;
-        document.getElementsByTagName('head')[0].appendChild(appleLink);
-
-        // Обновляем иконку в манифесте
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.ready.then(registration => {
-                registration.active.postMessage({
-                    type: 'UPDATE_ICON',
-                    iconUrl: newIconUrl
-                });
-            });
-        }
-    }
-
-    // Вызываем функцию создания иконки при загрузке страницы
-    window.addEventListener('load', createIcon);
-    </script>
+    <script src="app.js"></script>
 </body>
+
 </html>
